@@ -1,0 +1,62 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.rzl.spring.sentinel'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+def alibabaCloudVersion = '2.2.3.RELEASE'
+def spring_boot_version = "2.3.2.RELEASE"
+def sentinel_version = "1.8.1" // sentinel版本
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudVersion', "Hoxton.SR8")
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // nacos 注册
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${alibabaCloudVersion}"
+//    // nacos 配置中心
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${alibabaCloudVersion}"
+
+    implementation "org.springframework.boot:spring-boot-starter-web:${spring_boot_version}"
+
+    // sentinel 配置
+    implementation "com.alibaba.csp:sentinel-core:${sentinel_version}"
+    // sentinel注解
+    implementation "com.alibaba.csp:sentinel-annotation-aspectj:${sentinel_version}"
+    // sentinel dash http连接
+    implementation "com.alibaba.csp:sentinel-transport-simple-http:${sentinel_version}"
+
+    implementation 'org.greenrobot:eventbus:3.2.0'
+
+    implementation 'com.google.code.gson:gson:2.8.7'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

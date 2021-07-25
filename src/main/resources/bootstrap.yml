@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: sentinel-client
+
+  cloud:
+    nacos:
+      config: # nacos 配置中心
+        server-addr: localhost:8848
+        file-extension: yaml # 配置文件格式是yml
+        prefix: sentinel # 配置文件前缀
+        group: DEFAULT_GROUP # group是默认的话，可以不写
+        # dataID不用配置:，只需要在nacos后台将dataId命名为： ${prefix}-${spring.profile.active}.${file-extension}
+        #；例如：sentinel-dev.yaml
+      discovery: # 注册到nacos
+        server-addr: localhost:8848
+
+  profiles:
+    active: dev
+
+server:
+  port: 8081
+
+sentinel:
+  rules:
